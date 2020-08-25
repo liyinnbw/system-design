@@ -40,7 +40,7 @@
   - Separate Read/Write to different servers
     - Each server can handle limited connections at any single time
     - If many time-consuming writing process (such as upload) take place at the same time, read requests cannot be handled
-- Scale out
+- Scale out (horizontal scaling: add servers, vertical scaling: add CPU, RAM, Dist etc. in a single server)
   - Replicate servers (for both availability & handle more request)
     - App servers
     - DB servers
