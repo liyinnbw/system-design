@@ -22,10 +22,18 @@
 - You may slowly enrich this API to satisfy non-functional requirements
 
 ## Design Database
-- SQL or NoSQL?
-  - Is there more relationship than a basic key-value pair?
-  - Scalability?
+- SQL or NoSQL (Not only SQL)?
+
+|Factor|SQL|NoSQL|
+|---|---|---|
+|Scalability|Easy to horizontally scale|Hard to horizontally scale due to [CAP](https://en.wikipedia.org/wiki/CAP_theorem) theorem, hard to remain ACID, expensive to do cross-server query|
+|Cache friendly|May not be|Yes, since cache is NoSQL key-value pair, so cache & DB can adopt similar structure, making it easier to cache|
+|Data Structure|Unstructured data (can be multimedia)|Structured (only text data with fixed type/size)|
+|Schema flexibility|Schema should be determined beforehand, hard to change later|Schema can be easily changed later|
+|ACID (atomicity, consistency, isolation, durability) compliance|Usually only AID, with eventual consistency| ACID (usecase: money transfer)|
+|Data analysis|Easy due to structured data & SQL language|Harder, due to unstructured data| 
 - Schema
+
 
 ## Design for Functional Requirements
 - Draw UML or simple workflow diagram to help understanding
