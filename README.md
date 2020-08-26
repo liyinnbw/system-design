@@ -79,10 +79,36 @@
       - Replicate each shard
       - Add load balancer
   - In-memory Caching
-    - Usually read/write-through cache
+    - Always read-through for sure (read cache, if miss, read DB & update cache)
+    - Invalidation
+      - Write-through
+        - Write to cache, then write to DB
+        - Pros
+          - Ensure data consistency between cache & DB
+          - No data loss if cache server fail
+          - Last written data will be in cache
+        - Cons
+          - Excessive cache write even if the updated data not used later on ([cache pollution]())
+      - Write-around
+        - Invalidate cached item if exists, write directly to DB
+        - Pros
+          - Ensure data consistency between cache & DB
+          - No data loss if cache server fail
+          - Free up stale cache space, no excessive cache write before it is actually needed
+        - Cons
+          - Last updated data is not available in cache, next read will miss
+      - Write-back (not recommended)
+        - Write to cache, periodically copy cache to DB
+        - Pros
+          - Fast, no excessive write to DB
+          - Last written data will be in cache
+        - Cons
+          - Cache and DB only eventual consistent
+          - If cache fail, data loss
     - Eviction policy
-      - LRU
-      - LFU (better)
+      - LRU (simple, used by memcached & redis)
+      - LFU (now redis also has this choice)
+    
     - Decide cache location
       - One per app server (in-process cache)
         - Pros
