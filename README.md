@@ -54,6 +54,10 @@
     - Balancing strategy
       - Round robin
       - load-dependent
+    - Note
+      - load-balancer can be single point of failure, always has a duplicate idle load-balancer
+      - load-balancer itself has limited resources to handle incoming connections/requests (but is much larger than app server)
+      - When a load-balancer runs out of resources, use a DNS round-robin mechanism to distribute traffic to different IPs [read more](https://serverfault.com/a/268939)
   - DB sharding (if too many data to be stored in a single DB)
     - Vertical (split by columns)
       - Hard, usually require application level logic
