@@ -84,11 +84,26 @@
       - LRU
       - LFU (better)
     - Decide cache location
-      - One per app server
-        - Con: Need to update all caches when DB is updated
-      - Shared by all app servers
-        - Con: High stress, single point of failure
-          - Solution: replicate cache server and add load balancer for them too, but need to synch all of them when DB is updated
+      - One per app server (in-process cache)
+        - Pros
+          - Fastest, even if it is on app server's local disk (faster than through network)
+        - Cons
+          - If app servers are load-balanced, even if a request was previously made on a server and cached, still cache miss on different servers
+          - The cached content on different servers are not guaranteed to be consistent (but will be eventual consistent when cached content timesout)
+          - Each app server has limited cache capability that cannot be horizontally scaled
+        - Choose if
+          - The cached content are immutable (then no consistency issue)
+          - Eventual consistency is acceptable
+          - App is small, no need to scale, only 1 app server is sufficient
+      - Shared by all app servers via network (distributed cache such as memcached, redis)
+        - Pros
+          - The cache is always consistent
+          - Easy to horizontally scale cache
+        - Cons
+          - Slow due to network latency
+          - A single point of failure (however, using [consistent hashing](https://www.toptal.com/big-data/consistent-hashing) algorithm, even if a cache server fail, its cached items can be distributed to other servers efficiently without rehashing all items)
+        - Choose if
+          - Scalability is needed
     - DB server can do some caching configuration too, this will help also
   - CDN
     - For non meta data storage, we cannot cache it in memory (too expensive)
