@@ -85,6 +85,7 @@
       - Shared by all app servers
         - Con: High stress, single point of failure
           - Solution: replicate cache server and add load balancer for them too, but need to synch all of them when DB is updated
+    - DB server can do some caching configuration too, this will help also
   - CDN
     - For non meta data storage, we cannot cache it in memory (too expensive)
     - Instead we make sure these data are close to the user's geographical location, content delivery network is the solution
