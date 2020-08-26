@@ -43,8 +43,12 @@
 ## Design for Non-functional Requirements
 - Availability & Reliability
   - Replicate
-    - Server
-    - DB
+    - Load balancer
+      - Use a pair (HA peers)
+      - Each keep track of the other's status periodically (heartbeat)
+      - If one fails, the other takes over in seconds (either through on-premise floating IP mechanism, or a cloud TCP/UDP router [read more](https://cloud.google.com/solutions/best-practices-floating-ip-addresses))
+    - Server (behind load balancer)
+    - DB (master (read-write) & slave (read only))
   - Separate Read/Write to different servers
     - Each server can handle limited connections at any single time
     - If many time-consuming writing process (such as upload) take place at the same time, read requests cannot be handled
