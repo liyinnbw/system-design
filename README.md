@@ -109,4 +109,7 @@
 ## Logging
 - Consider is your design easy to get usage metrics
 
+## References
+- [Introduction to architecting systems for scale](https://lethain.com/introduction-to-architecting-systems-for-scale/)
+
 
