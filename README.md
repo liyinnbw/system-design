@@ -70,14 +70,18 @@
       - load-balancer can be single point of failure, always has a duplicate idle load-balancer
       - load-balancer itself has limited resources to handle incoming connections/requests (but is much larger than app server)
       - When a load-balancer runs out of resources, use a DNS round-robin mechanism to distribute traffic to different IPs [read more](https://serverfault.com/a/268939)
-  - DB sharding (if too many data to be stored in a single DB)
+  - DB partitioning (distributed DB)
     - Vertical (split by columns)
-      - Hard, usually require application level logic
-    - Horizontal (split by rows)
-      - Easy, usually key mod number_of_shards
+        - Hard, usually require application level logic
+        - When number of rows grow, have horizontally partition anayway
+    - Horizontal (split by rows, aka [sharding]())
+        - Easy, use consistent hashing of key
     - In addition
-      - Replicate each shard
-      - Add load balancer
+      - Each partition can be duplicated and made highly available with a load-balancer (master-slave) 
+    - Cons of partitioning
+      - SQL Join query can't be efficiently performed
+      - SQL Referential integrity (foreign key constraints) is lost
+      - DB may not be evenly distributed (some DB getd more requests), require rebalancing which is painful
   - In-memory Caching
     - Always read-through for sure (read cache, if miss, read DB & update cache)
     - Invalidation
