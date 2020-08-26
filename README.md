@@ -88,6 +88,7 @@
   - timestamp (replay attack)
 - Load balancer (defend DDoS attack)
 - Avoid incremental or easy to guess paths/keys
+- Server with public IP (can be accessed from the internet) must use HTTPS. For internal IP serverse, use HTTP.
 
 ## Maintenance
 - Treat maintenance as separate app/service that operates on the DB
