@@ -163,8 +163,12 @@
 ## Maintenance
 - Treat maintenance as separate app/service that operates on the DB
 
-## Logging
+## Monitoring
 - Consider is your design easy to get usage metrics
+  - Daily read/writes requests and data traffic
+  - Peak traffic, peak time
+  - Average service latencies
+
 
 ## References
 - [Introduction to architecting systems for scale](https://lethain.com/introduction-to-architecting-systems-for-scale/)
