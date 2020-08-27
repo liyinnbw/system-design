@@ -76,6 +76,14 @@
         - When number of rows grow, have horizontally partition anayway
     - Horizontal (split by rows, aka [sharding]())
         - Easy, use consistent hashing of key
+        - Key bits are determined by the expected data rows
+        - Keys can be generated using a separate service, when queried, the service moves a key from unused DB to usedDB
+          - Pros
+            - Separate responsibility, Apps & DB servers don't have to worry about key generation
+            - No duplicated keys from distributed Apps & DBs
+            - Fast, can precompute and store on disk
+          - Cons
+            - Single point of failure (solved by duplicating keygen services and DBs, at least two, each holding a different set of keys, can be simply even/odd keys)
     - In addition
       - Each partition can be duplicated and made highly available with a load-balancer (master-slave) 
     - Cons of partitioning
