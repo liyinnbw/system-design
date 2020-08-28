@@ -43,10 +43,10 @@
 ## Design for Non-functional Requirements
 - Concurrency
   - DB transaction isolation levels
-    - Read Uncommitted (no isolation) one transaction may read not yet committed changes made by other transaction, thereby allowing dirty reads
-    - Read Committed (write lock on current row) guarantees that any data read is committed at the moment it is read. The transaction holds a read or write lock on the current row, and thus prevent other transactions from reading, updating or deleting it
-    - Repeatable Read (write lock on all rows) transaction holds read locks on all rows it references and writes locks on all rows it inserts, updates, or deletes. Since other transaction cannot read, update or delete these rows, consequently it avoids non-repeatable read
-    - Serializable (highest isolation) concurrent transactions are performed as if they were sequentially performed
+    - Read Uncommitted (no isolation) one transaction may read not yet committed writes made by other transaction, thereby allowing dirty reads
+    - Read Committed (write lock on current row) guarantees that any data read is committed at the moment it is read. The transaction holds a read or write lock on the current row, and thus prevent other transactions from reading, writing or deleting it. But only applies to current row, resulting in non-repeatable reads
+    - Repeatable Read (write lock on all rows) transaction holds read locks on all rows it references and writes locks on all rows it inserts, updates, or deletes. Since other transaction cannot read, update or delete these rows, consequently it avoids non-repeatable read. However it allows insertion of new rows
+    - Serializable (highest isolation) concurrent transactions are performed as if they were sequentially performed, read/write lock all rows and no insertion
 
 - Availability & Reliability
   - Replicate
